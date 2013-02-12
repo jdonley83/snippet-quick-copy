@@ -12,12 +12,9 @@ com.jdonley83.SnippetQuickCopy = (function(){
 })();
 
 (function(){
-    var snips = com.jdonley83.SnippetQuickCopy;
-
-    var source = "{{#each snippets}}<p class='snippet-quick-copy' data-snip-text='{{this.text}}''>{{this.tag}}</p>{{/each}}"
-    var template = Handlebars.compile(source);
-
-    var snipsHtml = template({ snippets: snippets });
+    var snips = com.jdonley83.SnippetQuickCopy,
+        template = Handlebars.compile("{{#each snippets}}<p class='snippet-quick-copy' data-snip-text='{{this.text}}''>{{this.tag}}</p>{{/each}}"),
+        snipsHtml = template({ snippets: snippets });
 
     $('#snippets-wrapper').html('');
     $('#snippets-wrapper').append(snipsHtml);
