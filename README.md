@@ -7,6 +7,7 @@ a tool to have a set of text snippets handy and ready to be copied to a clipboar
 There are only a couple steps needed to get this set up.
 -make sure that you have a version of jquery loaded on the page.
 -also load the handlebars.js file that is found with these files.
+-create a div with an id set to 'snippets-wrapper'
 -create a javascript array variable on the page called snippets.
 
 var snippets = [
