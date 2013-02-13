@@ -2,8 +2,15 @@ var com = com || {};
 com.jdonley83 = com.jdonley83 || {};
 
 com.jdonley83.SnippetQuickCopy = (function(){
-    function ClipBoard(input){
-        window.prompt("Copy to clipboard: Ctrl+C, Enter", input);
+    function ClipBoard(input) {
+        $.modal("<div id='snippet-modal'><textarea style='width:100%;'>" + input + "</textarea></div>", {minWidth:600});
+        var textarea = $('#snippet-modal textarea');
+        $(textarea).select();
+        $(textarea).keypress(function(e) {
+            if (e.which == 13) {
+                $.modal.close();
+            }
+        });
     }
 
     return {
