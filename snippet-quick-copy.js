@@ -21,10 +21,34 @@ com.jdonley83.SnippetQuickCopy = (function(){
 (function(){
     var snips = com.jdonley83.SnippetQuickCopy,
         template = Handlebars.compile("{{#each snippets}}<p class='snippet-quick-copy' data-snip-text='{{this.text}}''>{{this.tag}}</p>{{/each}}"),
-        snipsHtml = template({ snippets: snippets });
+        itemSets = [],
+        length = snippets.length;
 
-    $('#snippets-wrapper').html('');
-    $('#snippets-wrapper').append(snipsHtml);
+    for (var i = 0; i < length; i++) {
+        var snippet = snippets[i];
+        if (snippet.node) {
+            itemSets[snippet.node] = itemSets[snippet.node] || [];
+            itemSets[snippet.node].push(snippet);
+        } else {
+            itemSets["default"] = itemSets["default"] || [];
+            itemSets["default"].push(snippet);
+        }
+    }
+
+    for (var key in itemSets) {
+        if (key === 'length' || !itemSets.hasOwnProperty(key)) continue;
+
+        var items = itemSets[key],
+            snipsHtml = template({snippets: items});
+
+        if (key == 'default') {
+            $('#snippets-wrapper').html('');
+            $('#snippets-wrapper').append(snipsHtml);
+        } else {
+            $('#snippets-wrapper-' + key).html('');
+            $('#snippets-wrapper-' + key).append(snipsHtml);
+        }
+    }
 
     $('.snippet-quick-copy').click(function(){
         snips.copy($(this).data('snip-text'));
