@@ -9,7 +9,7 @@ basics
 There are only a couple steps needed to get this set up.
 
 * make sure that you have a version of jquery loaded on the page.
-* also load the handlebars.js file that is found with these files.
+* also load the handlebars.js and jquery.simplemodal.1.4.4.min.js files that are found in this repository.
 * create a div with an id set to 'snippets-wrapper'
 * create a javascript array variable on the page called snippets.
 
