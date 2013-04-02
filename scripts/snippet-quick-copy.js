@@ -20,7 +20,8 @@ com.jdonley83.SnippetQuickCopy = (function(){
 
 (function(){
     var snips = com.jdonley83.SnippetQuickCopy,
-        template = Handlebars.compile("{{#each snippets}}<p class='snippet-quick-copy' data-snip-text='{{this.text}}''>{{this.tag}}</p>{{/each}}"),
+        template_str = "{{#if is_list}}<ul>{{/if}}{{#each snippets}}<{{../custom_tag}} class='snippet-quick-copy' data-snip-text='{{this.text}}''>{{this.tag}}</{{../custom_tag}}>{{/each}}{{#if is_list}}</ul>{{/if}}",
+        template = Handlebars.compile(template_str),
         itemSets = [],
         length = snippets.length;
 
@@ -39,7 +40,10 @@ com.jdonley83.SnippetQuickCopy = (function(){
         if (key === 'length' || !itemSets.hasOwnProperty(key)) continue;
 
         var items = itemSets[key],
-            snipsHtml = template({snippets: items});
+            custom_tag_type_entered = (snippets_options && snippets_options.tag && snippets_options.tag.length > 0),
+            tag = custom_tag_type_entered ? snippets_options.tag : 'p',
+            custom_tag_is_list_type = (custom_tag_type_entered && tag == 'li'),
+            snipsHtml = template({snippets: items, custom_tag: tag, is_list: custom_tag_is_list_type});
 
         if (key == 'default') {
             $('#snippets-wrapper').html('');
